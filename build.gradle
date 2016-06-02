@@ -1,0 +1,20 @@
+group 'com.cesardarinel.spark'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+     compile "com.sparkjava:spark-core:2.5" //add to build.gradle
+    compile 'com.sparkjava:spark-template-freemarker:2.3'
+    compile 'org.freemarker:freemarker:2.3.23'
+    compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.6.1'
+    compile 'com.h2database:h2:1.4.191'
+    compile 'com.sparkjava:spark-debug-tools:0.5'
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
