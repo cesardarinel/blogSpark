@@ -22,6 +22,10 @@ public class usuario {
     private Boolean administrador;
     private Boolean autor;
 
+    public usuario() {
+
+    }
+
     public int getId() {
         return id;
     }

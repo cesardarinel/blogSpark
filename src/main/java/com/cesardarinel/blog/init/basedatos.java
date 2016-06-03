@@ -34,53 +34,77 @@ public class basedatos {
      */
     public static void crearTablas() throws  SQLException{
         Connection con = serviciodatabase.getInstancia().getConexion();
+        droptable();
 
-        String sql = "CREATE TABLE IF NOT EXISTS USUSARIO\n" +
-                "(\n" +
-                "  MATRICULA INTEGER PRIMARY KEY NOT NULL,\n" +
-                "  NOMBRE VARCHAR(100) NOT NULL,\n" +
-                "  APELLIDO VARCHAR(100) NOT NULL,\n" +
-                "  TELEFONO VARCHAR(25) NOT NULL,\n" +
-                "  CARRERA VARCHAR(50) NOT NULL\n" +
-                ");";
+        String sql = "CREATE TABLE IF NOT EXISTS usuario (\n" +
+                "                        id INTEGER  auto_increment PRIMARY KEY NOT NULL,\n" +
+                "                username VARCHAR(100) NOT NULL,\n" +
+                "                nombre VARCHAR(100) NOT NULL,\n" +
+                "        password VARCHAR(100) NOT NULL,\n" +
+                "        administrador BOOLEAN NOT NULL,\n" +
+                "        autor BOOLEAN NOT NULL\n" +
+                "        );";
         Statement statement = con.createStatement();
         statement.execute(sql);
         statement.close();
 
-         sql = "CREATE TABLE IF NOT EXISTS COMENTARIO\n" +
-                "(\n" +
-                "  MATRICULA INTEGER PRIMARY KEY NOT NULL,\n" +
-                "  NOMBRE VARCHAR(100) NOT NULL,\n" +
-                "  APELLIDO VARCHAR(100) NOT NULL,\n" +
-                "  TELEFONO VARCHAR(25) NOT NULL,\n" +
-                "  CARRERA VARCHAR(50) NOT NULL\n" +
+         sql = "CREATE TABLE IF NOT EXISTS COMENTARIO " +
+                 "( \n" +
+                 "  id INTEGER  auto_increment PRIMARY KEY NOT NULL, \n" +
+                 "  comentario VARCHAR(800) NOT NULL,\n" +
+                 "  autor INTEGER NOT NULL,\n" +
+                 "  articulo INTEGER NOT NULL\n" +
+                 ");";
+        statement = con.createStatement();
+        statement.execute(sql);
+        statement.close();
+         sql = "CREATE TABLE IF NOT EXISTS ARTICULO ( \n" +
+                 "  id INTEGER auto_increment  PRIMARY KEY NOT NULL, \n" +
+                 "  titulo VARCHAR(200) NOT NULL,\n" +
+                 "  cuerpo VARCHAR(10000) NOT NULL,\n" +
+                 "  autor INTEGER NOT NULL,\n" +
+                 "  fecha date NOT NULL,\n" +
+                 "  etiquetas INTEGER NOT NULL,\n" +
+                 "  comentarios INTEGER NOT NULL\n" +
+                 ");";
+        statement = con.createStatement();
+        statement.execute(sql);
+        statement.close();
+        sql = "CREATE TABLE IF NOT EXISTS ETIQUETA " +
+                "( \n" +
+                "  id INTEGER  auto_increment PRIMARY KEY NOT NULL, \n" +
+                "  etiqueta VARCHAR(800) NOT NULL\n" +
                 ");";
         statement = con.createStatement();
         statement.execute(sql);
         statement.close();
-         sql = "CREATE TABLE IF NOT EXISTS ARTICULO\n" +
-                "(\n" +
-                "  MATRICULA INTEGER PRIMARY KEY NOT NULL,\n" +
-                "  NOMBRE VARCHAR(100) NOT NULL,\n" +
-                "  APELLIDO VARCHAR(100) NOT NULL,\n" +
-                "  TELEFONO VARCHAR(25) NOT NULL,\n" +
-                "  CARRERA VARCHAR(50) NOT NULL\n" +
-                ");";
-        statement = con.createStatement();
-        statement.execute(sql);
-        statement.close();
-        sql = "CREATE TABLE IF NOT EXISTS ETIQUETA\n" +
-                "(\n" +
-                "  MATRICULA INTEGER PRIMARY KEY NOT NULL,\n" +
-                "  NOMBRE VARCHAR(100) NOT NULL,\n" +
-                "  APELLIDO VARCHAR(100) NOT NULL,\n" +
-                "  TELEFONO VARCHAR(25) NOT NULL,\n" +
-                "  CARRERA VARCHAR(50) NOT NULL\n" +
-                ");";
+//init base
+        sql = "insert into usuario VALUES ('1','admin','admin','admin','1','0'); ";
         statement = con.createStatement();
         statement.execute(sql);
         statement.close();
 
             con.close();
     }
+    public static void droptable() throws SQLException {
+        Connection con = serviciodatabase.getInstancia().getConexion();
+        String sql = "drop table  IF EXISTS usuario";
+        Statement statement = con.createStatement();
+        statement.execute(sql);
+        statement.close();
+         sql = "drop table IF EXISTS  comentario";
+         statement = con.createStatement();
+        statement.execute(sql);
+        statement.close();
+         sql = "drop table IF EXISTS  articulo";
+         statement = con.createStatement();
+        statement.execute(sql);
+        statement.close();
+        sql = "drop table IF EXISTS  etiqueta";
+         statement = con.createStatement();
+        statement.execute(sql);
+        statement.close();
+        con.close();
+
+    }//
 }
